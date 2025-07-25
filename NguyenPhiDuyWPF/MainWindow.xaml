@@ -1,0 +1,96 @@
+﻿<Window x:Class="NguyenPhiDuyWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NguyenPhiDuyWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000">
+
+    <Window.Resources>
+        <local:Base64ToImageConverter x:Key="Base64ToImageConverter"/>
+    </Window.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Thanh điều khiển -->
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10" VerticalAlignment="Top">
+                <!-- ComboBox lọc theo danh mục -->
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <TextBlock Text="Filter by CategoryName:" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="cbCategoryFilter"
+                              Width="150" Height="30"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="CategoryID"
+                              SelectionChanged="cbCategoryFilter_SelectionChanged"/>
+                </StackPanel>
+
+                <!-- TextBox tìm kiếm -->
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <TextBlock Text="Search by Name:" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtSearch"
+                             Width="200" Height="30"
+                             VerticalContentAlignment="Center"
+                             TextChanged="txtSearch_TextChanged"
+                             ToolTip="Nhập từ khóa tìm kiếm"/>
+                </StackPanel>
+
+                <!-- Các nút chức năng -->
+                
+                <Button x:Name="btnViewCategory"
+                        Content="View Category"
+                        Width="150" Height="40"
+                        Margin="10,0,0,0"
+                        Click="btnViewCategory_Click"/>
+
+                <Button Content="Add Product"
+                        Width="150" Height="40"
+                        Margin="10,0,0,0"
+                        Click="btnAddProduct_Click"/>
+
+                <Button Content="Delete Product"
+                        Width="150" Height="40"
+                        Margin="10,0,0,0"
+                        Click="btnDeleteProduct_Click"/>
+
+                
+            </StackPanel>
+
+            <!-- DataGrid -->
+            <DataGrid x:Name="dgProducts"
+          Grid.Row="1"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          CanUserAddRows="False"
+          SelectionMode="Single"
+          SelectionChanged="dgProducts_SelectionChanged"
+          MouseDoubleClick="dgProducts_MouseDoubleClick"
+          Margin="0,0,0,10"
+          MinWidth="950"
+          HorizontalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ProductID}" Width="50"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="100"/>
+                    <DataGridTemplateColumn Header="Images" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Width="100" Height="100"
+                           Stretch="Uniform"
+                           Source="{Binding CategoryPicture, Converter={StaticResource Base64ToImageConverter}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Description" Binding="{Binding CategoryDescription}" Width="200"/>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </ScrollViewer>
+</Window>
