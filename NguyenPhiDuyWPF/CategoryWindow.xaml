@@ -2,30 +2,37 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:NguyenPhiDuyWPF"
-        Title="Category" Height="500" Width="800">
+        Title="Category" Height="600" Width="900">
 
     <Window.Resources>
         <local:Base64ToImageConverter x:Key="Base64ToImageConverter"/>
     </Window.Resources>
 
-    <DockPanel Margin="10">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <!-- Add Button -->
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
             <Button Content="Add Category" Width="120" Height="30" Click="BtnAdd_Click"/>
         </StackPanel>
 
         <!-- DataGrid -->
         <DataGrid x:Name="dgCategories"
+                  Grid.Row="1"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  ItemsSource="{Binding}"
                   SelectionMode="Single"
-                  CanUserAddRows="False">
+                  CanUserAddRows="False"
+                  Margin="0,0,0,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding CategoryID}" Width="50"/>
                 <DataGridTextColumn Header="Category Name" Binding="{Binding Name}" Width="200"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="300"/>
-                <DataGridTemplateColumn Header="Image" Width="200">
+                <DataGridTemplateColumn Header="Image" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Width="100" Height="100" Stretch="Uniform"
@@ -36,15 +43,45 @@
                 <DataGridTemplateColumn Header="Actions" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Content="Edit" Width="60" Margin="5,0" Click="BtnEdit_Click"/>
                                 <Button Content="Delete" Width="60" Margin="5,0" Click="BtnDelete_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
             </DataGrid.Columns>
         </DataGrid>
-    </DockPanel>
+
+        <!-- Form nh?p li?u -->
+        <Border Grid.Row="2" Padding="10" BorderThickness="1" BorderBrush="Gray" CornerRadius="5" Background="#f3f3f3" Visibility="Collapsed" x:Name="formPanel">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Margin="0 0 0 10">
+                    <TextBlock Text="Name:"/>
+                    <TextBox x:Name="txtName" Width="300"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0 0 0 10">
+                    <TextBlock Text="Description:"/>
+                    <TextBox x:Name="txtDescription" Width="300"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 0 0 10">
+                    <Image x:Name="imgPreview" Width="100" Height="100" Margin="0 0 10 0" />
+                    <Button Content="Ch?n ?nh" Click="BtnSelectImage_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <Button Content="L?u" Width="80" Margin="5,0" Click="BtnSave_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </Window>

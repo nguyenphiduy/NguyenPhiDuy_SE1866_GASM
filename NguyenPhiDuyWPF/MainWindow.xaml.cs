@@ -34,6 +34,7 @@ namespace NguyenPhiDuyWPF
         //    CategoryWindow categoryWindow = new CategoryWindow(); // mở ở chế độ thêm mới
         //    categoryWindow.ShowDialog();
         //}
+        
         private void LoadProducts()
         {
             var productBusiness = new ProductBusiness();
@@ -67,7 +68,12 @@ namespace NguyenPhiDuyWPF
         }
 
 
-        
+
+        private void btnReload_Click(object sender, RoutedEventArgs e)
+        {
+            LoadProducts(); // ✅ gọi lại hàm đã có sẵn
+        }
+
 
         private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
         {
@@ -94,6 +100,7 @@ namespace NguyenPhiDuyWPF
         {
             
         }
+
         
         private void ApplyFilters()
         {
